@@ -1,0 +1,59 @@
+<div id="app1">
+    <h2>Car Information</h2>
+ 
+     <button class="btn btn-outline-success" @@click="openRegisterPage">register</button>
+    <table class="table">
+        <tr>
+            <th>customerId</th>
+            <th>first name</th>
+            <th>last name</th>
+            <th>national id</th>
+            <th>mobile</th>
+        </tr>
+        <tr v-for="customer in customers">
+            <td>{{customer.customerId}}</td>
+            <td>{{customer.firstName}}</td>
+            <td>{{customer.lastName}}</td>
+            <td>{{customer.nationalId}}</td>
+            <td>{{customer.mobile}}</td>
+        </tr>
+    </table>
+</div>
+
+@section scripts {
+    <script>
+        //create a vue controller to control the app1
+        var component = {
+            //where to control
+            el:"#app1"
+            ,
+            //data section
+            data:{
+                //put your component wide variable here
+                customers:[]
+            }
+            ,
+            //component life cycle -> created
+            //this function get call when the component is loaded
+             async created() {
+                //get the data from the server and then update the data to the local data
+                //here
+                var url = "/api/customer/customers";
+                var result = await axios.get(url);
+                console.log(result);
+                this.customers=result.data;
+
+            }
+            ,
+            //methods/function to support component
+            methods:{
+               openRegisterPage(){
+                   //move to the registercar page
+                   window.location = "/main/RegisterCustomer";
+               }
+               ,
+            }
+        };
+        var app = new Vue(component);
+    </script>
+}

@@ -1,0 +1,50 @@
+<div id="app1">
+    <h2>New customer Information</h2>
+    <div class="form-group">
+        <label >firs tName</label>
+        <input type="text" class="form-control" v-model="customer.firstName">
+    </div>
+    <div class="form-group">
+        <label >Last Name</label>
+        <input type="text" class="form-control" v-model="customer.lastName">
+    </div>
+    <div class="form-group">
+        <label >National Id</label>
+        <input type="text" class="form-control" v-model="customer.NationalId">
+    </div>
+    <div class="form-group">
+        <label >mobile</label>
+        <input type="text" class="form-control" v-model="customer.mobile">
+    </div>
+    <button class="btn btn-outline-primary" @@click="registerCustomer">save</button>
+</div>
+@section scripts{
+    <script>
+        //create a vue instance to control app1
+        var component =  {
+            el:"#app1",
+            data:{
+                customer:{
+                    fistName:"",
+                    lastName:"",
+                    NationalId:"",
+                    mobile:"085"
+                }
+            },
+            methods:{
+                async registerCustomer(){
+                    //check the customer detail
+                    console.log(this.customer);
+                    var url ="/api/customer/register";
+                    var result = await axios.post(url,this.customer);
+                    console.log("response",result);
+                    //redirect to the index page
+                    window.location = "/main/customerindex";
+                }
+                ,
+
+            }
+        };
+        var app = new Vue(component);
+    </script>
+}

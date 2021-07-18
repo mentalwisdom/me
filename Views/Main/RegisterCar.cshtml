@@ -1,0 +1,50 @@
+<div id="app1">
+    <h2>New Car Information</h2>
+    <div class="form-group">
+        <label >brand</label>
+        <input type="text" class="form-control" v-model="car.brand">
+    </div>
+    <div class="form-group">
+        <label >model</label>
+        <input type="text" class="form-control" v-model="car.model">
+    </div>
+    <div class="form-group">
+        <label >rental price</label>
+        <input type="text" class="form-control" v-model="car.rentalPrice">
+    </div>
+    <div class="form-group">
+        <label >qty</label>
+        <input type="text" class="form-control" v-model="car.qty">
+    </div>
+    <button class="btn btn-outline-primary" @@click="registerCar">save</button>
+</div>
+@section scripts{
+    <script>
+        //create a vue instance to control app1
+        var component =  {
+            el:"#app1",
+            data:{
+                car:{
+                    brand:"",
+                    model:"",
+                    qty:1,
+                    rentalPrice:1000
+                }
+            },
+            methods:{
+                async registerCar(){
+                    //check the car detail
+                    console.log(this.car);
+                    var url ="/api/car/register";
+                    var result = await axios.post(url,this.car);
+                    console.log("response",result);
+                    //redirect to the index page
+                    window.location = "/main/index";
+                }
+                ,
+
+            }
+        };
+        var app = new Vue(component);
+    </script>
+}
